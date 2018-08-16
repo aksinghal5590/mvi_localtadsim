@@ -83,7 +83,7 @@ func main() {
 	// calculate VI values at boundaries (using DP)
 	then = time.Now()
 	bdyvis := calcMultiVI(tadlists)
-	sortAndPrint(bdyvis, true)
+	sortAndPrint(bdyvis, false)
 	//bdyvis = calcMultiVIPairwise(tadlists)
 	//sortAndPrint(bdyvis, true)
 	duration = time.Since(then)
@@ -304,6 +304,9 @@ func calcVI(overlapSet [][]int, tadlist [][]int) []bdyvi {
 		}
 		for t, tadend := range overlapSet[i:] {
 			if hicutil.ContainsHangingTAD(tadlist, tadstart[0], tadend[1]) {
+				continue
+			}
+			if tadstart[0] == tadend[1] {
 				continue
 			}
 			n := tadend[1] - tadstart[0] + 1
